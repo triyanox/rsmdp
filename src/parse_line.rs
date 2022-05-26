@@ -7,6 +7,9 @@ pub(crate) fn parse_line(line: &str) -> String {
     let h4_re = Regex::new(r"^#### (.*)$").unwrap();
     let h5_re = Regex::new(r"^##### (.*)$").unwrap();
     let h6_re = Regex::new(r"^###### (.*)$").unwrap();
+    let li_re = Regex::new(r"^- (.*)$").unwrap();
+    let ul_re = Regex::new(r"^\* (.*)$").unwrap();
+    let blockquote_re = Regex::new(r"^> (.*)$").unwrap();
     if h1_re.is_match(line) {
         return format!(
             "<h1> {} </h1>",
@@ -36,6 +39,26 @@ pub(crate) fn parse_line(line: &str) -> String {
         return format!(
             "<h6> {} </h6>",
             h6_re.captures(line).unwrap().get(1).unwrap().as_str()
+        );
+    } else if ul_re.is_match(line) {
+        return format!(
+            "<ul> <li> {} </li> </ul>",
+            ul_re.captures(line).unwrap().get(1).unwrap().as_str()
+        );
+    } else if li_re.is_match(line) {
+        return format!(
+            "<li> {} </li>",
+            li_re.captures(line).unwrap().get(1).unwrap().as_str()
+        );
+    } else if blockquote_re.is_match(line) {
+        return format!(
+            "<blockquote> {} </blockquote>",
+            blockquote_re
+                .captures(line)
+                .unwrap()
+                .get(1)
+                .unwrap()
+                .as_str()
         );
     } else {
         return format!("<p> {} </p>", line);
