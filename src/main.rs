@@ -9,6 +9,7 @@ mod parse_inline_code;
 mod parse_line;
 mod parse_line_in_tree;
 mod parse_link;
+mod parse_ordred_lists;
 mod parse_styling;
 mod parse_styling_in_tree;
 mod replace;
@@ -24,6 +25,7 @@ fn main() {
     markdown_tree = parse_inline_code::parse_inline_code(&markdown_tree);
     markdown_tree = parse_image::parse_image(&markdown_tree);
     markdown_tree = parse_link::parse_link(&markdown_tree);
+    markdown_tree = parse_ordred_lists::parse_ordered_lists(&markdown_tree);
 
     let mut html = String::from(
         "<!DOCTYPE html>\n<html>\n<head>\n<meta charset=\"utf-8\">\n<title>Markdown</title>\n</head>\n<body>\n",
